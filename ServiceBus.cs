@@ -8,9 +8,9 @@ public class ServiceBus
     const string connectionString = "Endpoint=sb://<placeholder>";
     const string queueName = "printers/printer1"; //Settings.Default.ServiceBusQueue;
 
-    static QueueClient queueClient;
+    static QueueClient? queueClient;
 
-    public static async Task ReceiveMessagesAsync(Func<TicketBundle, Task> messageHandler)
+    public static void ReceiveMessages(Func<TicketBundle, Task> messageHandler)
     {
         // Initialize the queue client
         queueClient = new QueueClient(connectionString, queueName);
@@ -24,11 +24,11 @@ public class ServiceBus
             // Complete the message so that it is not received again
             await queueClient.CompleteAsync(message.SystemProperties.LockToken);
         },
-        new MessageHandlerOptions(async args =>
+        new MessageHandlerOptions(args =>
         {
             // Handle any exceptions
             Console.WriteLine($"Exception: {args.Exception}");
-            // return; // Task.CompletedTask;
+            return Task.CompletedTask;
         })
         {
             MaxConcurrentCalls = 1,
@@ -40,6 +40,8 @@ public class ServiceBus
     public static async Task StopReceivingMessagesAsync()
     {
         // Close the queue client
-        await queueClient.CloseAsync();
+        if (queueClient != null) {
+            await queueClient.CloseAsync();
+        }
     }
 }
