@@ -4,16 +4,12 @@ using RoodFluweel.Printing.Model;
 
 public class ServiceBus
 {
-    // TODO: Make these configurable
-    const string connectionString = "Endpoint=sb://<placeholder>";
-    const string queueName = "printers/printer1"; //Settings.Default.ServiceBusQueue;
-
     static QueueClient? queueClient;
 
-    public static void ReceiveMessages(Func<TicketBundle, Task> messageHandler)
+    public static void ReceiveMessages(string ConnectionString, string QueueName, Func<TicketBundle, Task> messageHandler)
     {
         // Initialize the queue client
-        queueClient = new QueueClient(connectionString, queueName);
+        queueClient = new QueueClient(ConnectionString, QueueName);
 
         // Register the message handler and receive messages in a loop
         queueClient.RegisterMessageHandler(async (message, token) =>

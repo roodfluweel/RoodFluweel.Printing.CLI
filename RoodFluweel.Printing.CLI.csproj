@@ -9,8 +9,32 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.4" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
     <Reference Include="RoodFluweel.Printing.Model">
       <HintPath>RoodFluweel\RoodFluweel.Printing.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v23.2">
+      <HintPath>DevExpress23.2\DevExpress.Data.v23.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Drawing.v23.2">
+      <HintPath>DevExpress23.2\DevExpress.Drawing.v23.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Drawing.v23.2.Skia">
+      <HintPath>DevExpress23.2\DevExpress.Drawing.v23.2.Skia.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v23.2.Core">
+      <HintPath>DevExpress23.2\DevExpress.Printing.v23.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v23.2.Core">
+      <HintPath>DevExpress23.2\DevExpress.Pdf.v23.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v23.2">
+      <HintPath>DevExpress23.2\DevExpress.XtraReports.v23.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v23.2.Extensions">
+      <HintPath>DevExpress23.2\DevExpress.XtraReports.v23.2.Extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
 

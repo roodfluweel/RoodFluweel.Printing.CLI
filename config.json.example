@@ -1,0 +1,6 @@
+{
+    "ServiceBus": {
+        "ConnectionString": "Endpoint=sb://<your-connection-string-here>",
+        "QueueName": "printers/printer1"
+    }
+}
