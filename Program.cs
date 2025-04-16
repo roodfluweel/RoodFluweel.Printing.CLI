@@ -4,6 +4,8 @@ using RoodFluweel.Printing.Model;
 
 public partial class Program
 {
+    private static string templatePath = "";
+
     public static void Main(string[] args)
     {
         Console.WriteLine("****************************************");
@@ -18,12 +20,15 @@ public partial class Program
         string queueName = "";
         try {
             string json = File.ReadAllText("config.json");
-            dynamic config = JsonConvert.DeserializeObject(json);
-            if (config == null || config?.ServiceBus == null || config?.ServiceBus?.ConnectionString == null || config?.ServiceBus?.QueueName == null) {
+            var config = JsonConvert.DeserializeObject<Config>(json);
+            if (config?.ServiceBus?.ConnectionString == null ||
+                config?.ServiceBus?.QueueName == null ||
+                config?.TemplatePath == null) {
                 throw new Exception("config.json is empty or invalid");
             }
             connectionString = config.ServiceBus.ConnectionString;
             queueName = config.ServiceBus.QueueName;
+            templatePath = config.TemplatePath;
         } catch (Exception e) {
             Console.WriteLine("Error reading config.json: " + e.Message);
             return;
@@ -52,7 +57,7 @@ public partial class Program
 
         // Load XML template
         string cwd = Directory.GetCurrentDirectory();
-        printer.TemplatePath = cwd + "/Templates/reprise_qr_xml.repx";
+        printer.TemplatePath = Path.Combine(cwd, templatePath);
 
         // Generate PDF filename based on date + time + fullName
         string pdfFilename = cwd + "/Output/" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + body.Customer.FullName + ".pdf";
@@ -62,5 +67,17 @@ public partial class Program
 
         printer.GetPdf(body, pdfFilename);
     }
+}
+
+public class Config
+{
+    public ServiceBusConfig? ServiceBus { get; set; }
+    public string? TemplatePath { get; set; }
+}
+
+public class ServiceBusConfig
+{
+    public string? ConnectionString { get; set; }
+    public string? QueueName { get; set; }
 }
 
